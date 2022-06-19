@@ -1,0 +1,9 @@
+{
+
+    "display": "fullscreen",
+    "scope": "/",
+    "start_url": "/",
+    "name": "Harmony Timetable",
+    "short_name": "Harmony",
+    "description": "Timetable Mobile first application"
+}
