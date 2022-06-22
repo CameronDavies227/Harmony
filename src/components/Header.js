@@ -22,6 +22,29 @@ export const Header = () => {
       document.documentElement.classList.remove('dark')
     }
   }
+  function Logout(){
+    e.preventDefault();
+      
+    fetch(`http://localhost:5000/logout`, {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+    }).then(response => {
+      if(!response.ok){
+        throw new Error('An error has occured: ' + response.statusText)
+      } else {
+        return response.json();
+      }
+    }).then(data => {
+      console.log(data)
+      sessionStorage.removeItem('user')
+      setUser(data)
+    }).catch(error => {
+      setLoading(false)
+      alert(error);
+    })
+  }
 
   const Search = () =>{
     document.getElementById("groupSearchAccordion").className = "accordion visible"
@@ -35,6 +58,7 @@ export const Header = () => {
         {/* <button type="button" className={buttonClassName} data-bs-toggle="modal" data-bs-target="#groupsModal">Search Groups</button>*/}
         <button type="button" className={buttonClassName} data-bs-toggle="modal" data-bs-target="#menuModal">Menu</button>
         <button type="button" className={buttonClassName}><Link to='/events'>Schedule</Link></button>
+        <button type="button" className={buttonClassName} onClick={Logout}>Logout</button>
       </div>
     </div>
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const users = require('../services/users');
+const users = require('../controllers/users');
 
 /* GET users. */
 router.get('/', async function(req, res, next) {
@@ -14,7 +14,8 @@ router.get('/', async function(req, res, next) {
 
 /* POST user */
 router.post('/', async function(req, res, next) {
-    try {
+  console.log(req.body);  
+  try {
       res.json(await users.create(req.body));
     } catch (err) {
       console.error(`Error while registering new user`, err.message);
@@ -43,7 +44,7 @@ router.delete('/:id', async function(req, res, next) {
 });
 
 /* LOGIN user. */
-router.get('/username', async function(req, res, next) {
+router.post('/:username', async function(req, res, next) {
   try {
     res.json(await users.login(req.query.username, req.body));
   } catch (err) {

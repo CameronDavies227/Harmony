@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import EventTableRow from "./EventTableRow";
 import Spinner from "./helpercomponents/Spinner";
+import { FaPlusCircle, FaQuestion} from "react-icons/fa"
 //import { MailIcon } from '@heroicons/react/solid'
 import 'tw-elements';
 
@@ -30,11 +31,11 @@ export default function Events() {
 
   useEffect(() => {
       setLoading(true)
-      fetch(`http://localhost:3000/events/1`, {
+      fetch(`http://localhost:5000/events/1`, {
           method: 'GET',
           headers: {
               //'Authorization': 'Bearer ' + user.token,
-              'Accept': 'application/json'
+              'Content-Type': 'application/json'
           }
       }).then(response => {
           if(!response.ok){
@@ -55,13 +56,18 @@ export default function Events() {
       setLoading(true)
       console.log(e);
             // input validation required
+            let name = e.target.name.value;
+            let description = e.target.des.value;
+            let date = e.target.date.value;
+            let time = e.target.time.value;
 
 
-      fetch('https://localhost/events/addevent/1', {
+      fetch('http://localhost:5000/events/1', {
         method: 'POST',
         headers:{
           'Content-Type': 'application/json'
         },
+        body: JSON.stringify({name, description, date, time})
       }).then(response => {
         if(!response.ok){
           throw new Error('An error has occured: ' + response.statusText)
@@ -91,7 +97,7 @@ export default function Events() {
         <div className={formClassName}>
           <div className="grid grid-cols-2">
             <h1 >Event List</h1>
-            <button type="button" className={buttonClassName} data-bs-toggle="modal" data-bs-target="#addEventModal">Add Event+</button>
+            <button type="button" className={buttonClassName} data-bs-toggle="modal"data-bs-target="#addEventModal"><FaPlusCircle/>Add Event <FaQuestion/></button>
           </div>
           <div className='card shadow col'>
             <div className= {table}>
@@ -114,7 +120,7 @@ export default function Events() {
               	Delete
               </div>
             </div>
-            <div>{events.data.map((events, i) => (
+            <div>{events.data?.map((events, i) => (
               <EventTableRow key={i} events={events} />
             ))}
             </div>
@@ -150,8 +156,8 @@ export default function Events() {
                   </div>
 
                   <div className="flex flex-col">
-                      <label htmlFor="description">Description</label>
-                      <textarea name="message" id="message" cols="30" rows="3" required
+                      <label htmlFor="des">Description</label>
+                      <textarea id="des" name="des" cols="30" rows="3"
                           className=" text-gray-700 peer border border-slate-400"></textarea>
                       <p className="invisible peer-invalid:visible text-red-700 font-light">
                           This field cannot be empty
@@ -162,14 +168,14 @@ export default function Events() {
                     <div className="datepicker relative form-floating mb-3 xl:w-96" data-mdb-toggle-button="false">
                       <input type="date"
                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        placeholder="Select a date" data-mdb-toggle="datepicker" />
+                        placeholder="Select a date" data-mdb-toggle="datepicker" id="date" />
                       <label htmlFor="floatingInput" className="text-gray-700">Select a date</label>
                     </div>
                   </div>
 
                   <div className="flex justify-center">
                     <div className="timepicker relative form-floating mb-3 xl:w-96" data-mdb-with-icon="true" id="input-toggle-timepicker">
-                      <input type="time"
+                      <input type="time" id="time"
                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                         placeholder="Select a time" data-mdb-toggle="input-toggle-timepicker" />
                       <label htmlFor="floatingInput" className="text-gray-700">Select a time</label>

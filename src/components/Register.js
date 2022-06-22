@@ -19,11 +19,11 @@ export const Register = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(user !== null){
-          setLoading(false)
-          navigate('/')
-        }
-      },[user])
+      if(sessionStorage.user !== null){
+        setLoading(false)
+        navigate('/events')
+      }
+    },[user])
 
     function Register(e){
         e.preventDefault();
@@ -31,14 +31,16 @@ export const Register = () => {
     
         // input validation required
         let username = e.target.username.value;
+        let email = e.target.value;
+        let phone = e.target.value;
         let password = e.target.password.value;
         
-        fetch('https://localhost/users/register', {
+        fetch('http://localhost:5000/register', {
           method: 'POST',
           headers:{
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({username, password})
+          body: JSON.stringify({username, email, phone, password})
         }).then(response => {
           if(!response.ok){
             throw new Error('An error has occured: ' + response.statusText)
@@ -47,7 +49,7 @@ export const Register = () => {
           }
         }).then(data => {
           console.log(data)
-          localStorage.setItem('user', JSON.stringify(data))
+          sessionStorage.setItem('user', JSON.stringify(data))
           setUser(data)
         }).catch(error => {
           setLoading(false)

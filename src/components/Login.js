@@ -17,11 +17,9 @@ export const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(user !== null){
+        if(sessionStorage.user !== null){
           setLoading(false)
           navigate('/events')
-          user.id = localStorage.uID;
-          user.usertype = localStorage.usertype;
         }
       },[user])
 
@@ -33,8 +31,8 @@ export const Login = () => {
         let username = e.target.username.value;
         let password = e.target.password.value;
         
-        fetch(`https://localhost/users/login`, {
-          method: 'GET',
+        fetch(`http://localhost:5000/login`, {
+          method: 'POST',
           headers:{
             'Content-Type': 'application/json'
           },
@@ -47,7 +45,7 @@ export const Login = () => {
           }
         }).then(data => {
           console.log(data)
-          localStorage.setItem('user', JSON.stringify(data))
+          sessionStorage.setItem('user', JSON.stringify(data))
           setUser(data)
         }).catch(error => {
           setLoading(false)

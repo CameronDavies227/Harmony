@@ -6,6 +6,5 @@ const config = {
     password: "root",
     database: "harmony",
   },
-  listPerPage: 10,
 };
 module.exports = config;

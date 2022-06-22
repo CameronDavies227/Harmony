@@ -695,7 +695,7 @@ function $c4ef0f411944c818$export$2e2bcd8739ae039({ events: events1  }) {
     const { id: id , name: name , description: description , startTime_Date: startTime_Date , endTime_Date: endTime_Date  } = events1;
     const deleteEvent = (events)=>{
         console.log(events.target.id);
-        var url = `http://localhost:3000/events/delete/${id}`;
+        var url = `http://localhost:5000/events/delete/${id}`;
         fetch(url, {
             method: 'GET',
             headers: {
@@ -767,7 +767,7 @@ function $422de6cfa3dd5951$export$2e2bcd8739ae039() {
     ]);
     $ltMAx$react.useEffect(()=>{
         setLoading(true);
-        fetch(`http://localhost:3000/events/1`, {
+        fetch(`http://localhost:5000/events/1`, {
             method: 'GET',
             headers: {
                 //'Authorization': 'Bearer ' + user.token,

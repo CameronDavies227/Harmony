@@ -1013,21 +1013,22 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactDom = require("react-dom");
 var _reactDomDefault = parcelHelpers.interopDefault(_reactDom);
 var _app = require("./App");
-var _serviceWorkerRegistration = require("./serviceWorkerRegistration");
+var _swDev = require("./swDev");
+var _swDevDefault = parcelHelpers.interopDefault(_swDev);
 const appElement = document.getElementById("app");
 _reactDomDefault.default.render(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_app.App, {}, void 0, false, {
     fileName: "src/index.js",
     lineNumber: 8,
     columnNumber: 19
 }, undefined), appElement);
-_serviceWorkerRegistration.register();
+_swDevDefault.default();
 
   $parcel$ReactRefreshHelpers$20e5.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-dom":"j6uA9","./App":"e9Zfo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./serviceWorkerRegistration":"lc3up","./index.css":"irmnC","react":"21dqq"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-dom":"j6uA9","./App":"e9Zfo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./index.css":"irmnC","react":"21dqq","./swDev":"hpBvD"}],"iTorj":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react-jsx-dev-runtime.development.js');
 
@@ -22779,7 +22780,7 @@ const Login = ()=>{
         let username = e.target.username.value;
         let password = e.target.password.value;
         fetch(`https://localhost/users/login`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -67919,7 +67920,7 @@ function Events() {
     ]);
     _react.useEffect(()=>{
         setLoading(true);
-        fetch(`http://localhost:3000/events/1`, {
+        fetch(`http://localhost:5000/events/1`, {
             method: 'GET',
             headers: {
                 //'Authorization': 'Bearer ' + user.token,
@@ -67940,7 +67941,7 @@ function Events() {
         setLoading(true);
         console.log(e);
         // input validation required
-        fetch('https://localhost/events/addevent/1', {
+        fetch('https://localhost/events/1', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -68365,13 +68366,16 @@ parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
+const color = "bg-white-600 dark:bg-slate-600 dark:text-gray-50";
 const formClassName = "container border-x border-black mx-auto p-4 grid gap-1";
 const table = "grid grid-cols-6 m-2 shadow-lg bg-white border-separate";
+const buttonClassName = "rounded inline-block px-6 py-2.5 font-medium bg-white-600 dark:bg-slate-600 dark:text-gray-50 hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out";
+const footer = "modal-footer flex flex-shrink-0 flex-wrap items-center justify-end gap-x-4 p-4 border-t border-gray-200 rounded-b-md";
 function EventTableRow({ events: events1  }) {
-    const { id , name , description , startTime_Date , endTime_Date  } = events1;
+    const { id , name , description , date , time  } = events1;
     const deleteEvent = (events)=>{
         console.log(events.target.id);
-        var url = `http://localhost:3000/events/delete/${id}`;
+        var url = `http://localhost:5000/events/${id}`;
         fetch(url, {
             method: 'GET',
             headers: {
@@ -68386,75 +68390,345 @@ function EventTableRow({ events: events1  }) {
         );
     };
     return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_jsxDevRuntime.Fragment, {
-        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-            className: table,
-            children: [
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                    children: name
-                }, void 0, false, {
-                    fileName: "src/components/EventTableRow.js",
-                    lineNumber: 36,
-                    columnNumber: 7
-                }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                    children: description
-                }, void 0, false, {
-                    fileName: "src/components/EventTableRow.js",
-                    lineNumber: 37,
-                    columnNumber: 7
-                }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                    children: startTime_Date
-                }, void 0, false, {
-                    fileName: "src/components/EventTableRow.js",
-                    lineNumber: 38,
-                    columnNumber: 7
-                }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                    children: endTime_Date
-                }, void 0, false, {
-                    fileName: "src/components/EventTableRow.js",
-                    lineNumber: 39,
-                    columnNumber: 7
-                }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
-                        type: "button",
-                        children: "Edit"
+        children: [
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: table,
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        children: name
+                    }, void 0, false, {
+                        fileName: "src/components/EventTableRow.js",
+                        lineNumber: 38,
+                        columnNumber: 7
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        children: description
+                    }, void 0, false, {
+                        fileName: "src/components/EventTableRow.js",
+                        lineNumber: 39,
+                        columnNumber: 7
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        children: date
+                    }, void 0, false, {
+                        fileName: "src/components/EventTableRow.js",
+                        lineNumber: 40,
+                        columnNumber: 7
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        children: time
                     }, void 0, false, {
                         fileName: "src/components/EventTableRow.js",
                         lineNumber: 41,
-                        columnNumber: 9
-                    }, this)
-                }, void 0, false, {
-                    fileName: "src/components/EventTableRow.js",
-                    lineNumber: 40,
-                    columnNumber: 7
-                }, this),
-                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
-                        type: "button",
-                        onClick: deleteEvent,
-                        size: "sm",
-                        variant: "danger",
-                        children: id
+                        columnNumber: 7
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                            className: buttonClassName,
+                            type: "button",
+                            "data-bs-toggle": "modal",
+                            "data-bs-target": "#editEventModal",
+                            size: "sm",
+                            variant: "danger",
+                            children: " Edit "
+                        }, void 0, false, {
+                            fileName: "src/components/EventTableRow.js",
+                            lineNumber: 43,
+                            columnNumber: 9
+                        }, this)
                     }, void 0, false, {
                         fileName: "src/components/EventTableRow.js",
-                        lineNumber: 46,
-                        columnNumber: 9
+                        lineNumber: 42,
+                        columnNumber: 7
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                            className: buttonClassName,
+                            type: "button",
+                            onClick: deleteEvent,
+                            size: "sm",
+                            variant: "danger",
+                            children: " Delete "
+                        }, void 0, false, {
+                            fileName: "src/components/EventTableRow.js",
+                            lineNumber: 46,
+                            columnNumber: 9
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "src/components/EventTableRow.js",
+                        lineNumber: 45,
+                        columnNumber: 7
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/EventTableRow.js",
+                lineNumber: 37,
+                columnNumber: 5
+            }, this),
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: "modal fade fixed top-0 left-0 hidden w-full h-full text-gray-800 dark:text-white outline-none overflow-x-hidden overflow-y-auto",
+                id: "editEventModal",
+                tabIndex: "-1",
+                "aria-labelledby": "exampleModalLabel",
+                "aria-hidden": "true",
+                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                    className: "modal-dialog relative w-auto pointer-events-none",
+                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                        className: "modal-content bg-white dark:bg-gray-600 border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-clip-padding rounded-md outline-none text-current",
+                        children: [
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                className: "modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md",
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h5", {
+                                        className: "text-xl font-medium leading-normal ",
+                                        id: "modalLabel",
+                                        children: "Edit Event"
+                                    }, void 0, false, {
+                                        fileName: "src/components/EventTableRow.js",
+                                        lineNumber: 55,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                                        type: "button",
+                                        className: "btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline",
+                                        "data-bs-dismiss": "modal",
+                                        "aria-label": "Close"
+                                    }, void 0, false, {
+                                        fileName: "src/components/EventTableRow.js",
+                                        lineNumber: 56,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/EventTableRow.js",
+                                lineNumber: 54,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                className: "modal-body relative p-4",
+                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                    className: "form-check",
+                                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("form", {
+                                        className: formClassName + " " + color,
+                                        children: [
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h1", {
+                                                className: "text-xl font-light",
+                                                children: "Event"
+                                            }, void 0, false, {
+                                                fileName: "src/components/EventTableRow.js",
+                                                lineNumber: 65,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                                className: "flex flex-col",
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                                        htmlFor: "name",
+                                                        children: "Name"
+                                                    }, void 0, false, {
+                                                        fileName: "src/components/EventTableRow.js",
+                                                        lineNumber: 68,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                                        className: "text-gray-700 peer border border-slate-400",
+                                                        type: "text",
+                                                        name: "name",
+                                                        id: "name",
+                                                        defaultValue: name,
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "src/components/EventTableRow.js",
+                                                        lineNumber: 69,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                                                        className: "invisible peer-invalid:visible text-red-700 font-light",
+                                                        children: "Please enter your Name"
+                                                    }, void 0, false, {
+                                                        fileName: "src/components/EventTableRow.js",
+                                                        lineNumber: 71,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "src/components/EventTableRow.js",
+                                                lineNumber: 67,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                                className: "flex flex-col",
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                                        htmlFor: "description",
+                                                        children: "Description"
+                                                    }, void 0, false, {
+                                                        fileName: "src/components/EventTableRow.js",
+                                                        lineNumber: 77,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("textarea", {
+                                                        name: "description",
+                                                        id: "description",
+                                                        cols: "30",
+                                                        rows: "3",
+                                                        defaultValue: description,
+                                                        required: true,
+                                                        className: " text-gray-700 peer border border-slate-400"
+                                                    }, void 0, false, {
+                                                        fileName: "src/components/EventTableRow.js",
+                                                        lineNumber: 78,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                                                        className: "invisible peer-invalid:visible text-red-700 font-light",
+                                                        children: "This field cannot be empty"
+                                                    }, void 0, false, {
+                                                        fileName: "src/components/EventTableRow.js",
+                                                        lineNumber: 80,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "src/components/EventTableRow.js",
+                                                lineNumber: 76,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                                className: "flex items-center justify-center",
+                                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                                    className: "datepicker relative form-floating mb-3 xl:w-96",
+                                                    "data-mdb-toggle-button": "false",
+                                                    children: [
+                                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                                            type: "date",
+                                                            defaultValue: date,
+                                                            className: "form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none",
+                                                            placeholder: "Select a date",
+                                                            "data-mdb-toggle": "datepicker"
+                                                        }, void 0, false, {
+                                                            fileName: "src/components/EventTableRow.js",
+                                                            lineNumber: 87,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                                            htmlFor: "floatingInput",
+                                                            className: "text-gray-700",
+                                                            children: "Select a date"
+                                                        }, void 0, false, {
+                                                            fileName: "src/components/EventTableRow.js",
+                                                            lineNumber: 90,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "src/components/EventTableRow.js",
+                                                    lineNumber: 86,
+                                                    columnNumber: 21
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "src/components/EventTableRow.js",
+                                                lineNumber: 85,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                                className: "flex justify-center",
+                                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                                    className: "timepicker relative form-floating mb-3 xl:w-96",
+                                                    "data-mdb-with-icon": "true",
+                                                    id: "input-toggle-timepicker",
+                                                    children: [
+                                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                                                            type: "time",
+                                                            defaultValue: time,
+                                                            className: "form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none",
+                                                            placeholder: "Select a time",
+                                                            "data-mdb-toggle": "input-toggle-timepicker"
+                                                        }, void 0, false, {
+                                                            fileName: "src/components/EventTableRow.js",
+                                                            lineNumber: 96,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("label", {
+                                                            htmlFor: "floatingInput",
+                                                            className: "text-gray-700",
+                                                            children: "Select a time"
+                                                        }, void 0, false, {
+                                                            fileName: "src/components/EventTableRow.js",
+                                                            lineNumber: 99,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "src/components/EventTableRow.js",
+                                                    lineNumber: 95,
+                                                    columnNumber: 21
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "src/components/EventTableRow.js",
+                                                lineNumber: 94,
+                                                columnNumber: 19
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "src/components/EventTableRow.js",
+                                        lineNumber: 64,
+                                        columnNumber: 17
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "src/components/EventTableRow.js",
+                                    lineNumber: 61,
+                                    columnNumber: 15
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "src/components/EventTableRow.js",
+                                lineNumber: 60,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                className: footer,
+                                children: [
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                                        type: "button",
+                                        "data-bs-dismiss": "modal",
+                                        children: "Close"
+                                    }, void 0, false, {
+                                        fileName: "src/components/EventTableRow.js",
+                                        lineNumber: 107,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+                                        type: "button",
+                                        children: "Edit Event"
+                                    }, void 0, false, {
+                                        fileName: "src/components/EventTableRow.js",
+                                        lineNumber: 108,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/EventTableRow.js",
+                                lineNumber: 106,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/EventTableRow.js",
+                        lineNumber: 53,
+                        columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "src/components/EventTableRow.js",
-                    lineNumber: 45,
-                    columnNumber: 7
+                    lineNumber: 52,
+                    columnNumber: 11
                 }, this)
-            ]
-        }, void 0, true, {
-            fileName: "src/components/EventTableRow.js",
-            lineNumber: 35,
-            columnNumber: 5
-        }, this)
-    }, void 0, false);
+            }, void 0, false, {
+                fileName: "src/components/EventTableRow.js",
+                lineNumber: 50,
+                columnNumber: 5
+            }, this)
+        ]
+    }, void 0, true);
 }
 exports.default = EventTableRow;
 _c = EventTableRow;
@@ -68673,84 +68947,17 @@ $RefreshReg$(_c, "Header");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","tw-elements":"9m59i","react-router-dom":"fdOAw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"lc3up":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","tw-elements":"9m59i","react-router-dom":"fdOAw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"irmnC":[function() {},{}],"hpBvD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "register", ()=>register
-);
-parcelHelpers.export(exports, "unregister", ()=>unregister
-);
-// This optional code is used to register a service worker.
-// register() is not called by default.
-// This lets the app load faster on subsequent visits in production, and gives
-// it offline capabilities. However, it also means that developers (and users)
-// will only see deployed updates on subsequent visits to a page, after all the
-// existing tabs open on the page have been closed, since previously cached
-// resources are updated in the background.
-// To learn more about the benefits of this model and instructions on how to
-// opt-in, read https://cra.link/PWA
-const isLocalhost = Boolean(window.location.hostname === 'localhost' || // [::1] is the IPv6 localhost address.
-window.location.hostname === '[::1]' || // 127.0.0.0/8 are considered localhost for IPv4.
-window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/));
-function register(config) {}
-function registerValidSW(swUrl, config) {
-    navigator.serviceWorker.register(swUrl).then((registration)=>{
-        registration.onupdatefound = ()=>{
-            const installingWorker = registration.installing;
-            if (installingWorker == null) return;
-            installingWorker.onstatechange = ()=>{
-                if (installingWorker.state === 'installed') {
-                    if (navigator.serviceWorker.controller) {
-                        // At this point, the updated precached content has been fetched,
-                        // but the previous service worker will still serve the older
-                        // content until all client tabs are closed.
-                        console.log("New content is available and will be used when all tabs for this page are closed. See https://cra.link/PWA.");
-                        // Execute callback
-                        if (config && config.onUpdate) config.onUpdate(registration);
-                    } else {
-                        // At this point, everything has been precached.
-                        // It's the perfect time to display a
-                        // "Content is cached for offline use." message.
-                        console.log('Content is cached for offline use.');
-                        // Execute callback
-                        if (config && config.onSuccess) config.onSuccess(registration);
-                    }
-                }
-            };
-        };
-    }).catch((error)=>{
-        console.error('Error during service worker registration:', error);
+function swDev() {
+    let swUrl = `${undefined}` / swDev.js;
+    navigator.serviceWorker.register(swUrl).then((response)=>{
+        console.warn("response", response);
     });
 }
-function checkValidServiceWorker(swUrl, config) {
-    // Check if the service worker can be found. If it can't reload the page.
-    fetch(swUrl, {
-        headers: {
-            'Service-Worker': 'script'
-        }
-    }).then((response)=>{
-        // Ensure service worker exists, and that we really are getting a JS file.
-        const contentType = response.headers.get('content-type');
-        if (response.status === 404 || contentType != null && contentType.indexOf('javascript') === -1) // No service worker found. Probably a different app. Reload the page.
-        navigator.serviceWorker.ready.then((registration)=>{
-            registration.unregister().then(()=>{
-                window.location.reload();
-            });
-        });
-        else // Service worker found. Proceed as normal.
-        registerValidSW(swUrl, config);
-    }).catch(()=>{
-        console.log('No internet connection found. App is running in offline mode.');
-    });
-}
-function unregister() {
-    if ('serviceWorker' in navigator) navigator.serviceWorker.ready.then((registration)=>{
-        registration.unregister();
-    }).catch((error)=>{
-        console.error(error.message);
-    });
-}
+exports.default = swDev;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"irmnC":[function() {},{}]},["kn9T2","7fmqN","8lqZg"], "8lqZg", "parcelRequireb7ed")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["kn9T2","7fmqN","8lqZg"], "8lqZg", "parcelRequireb7ed")
 
 //# sourceMappingURL=index.975ef6c8.js.map

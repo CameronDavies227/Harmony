@@ -2,9 +2,14 @@ import './index.css';
 import React from 'react';
 import ReactDOM from "react-dom";
 import { App } from "./App";
+import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
  
-  const appElement = document.getElementById("app")
-  ReactDOM.render(<App />, appElement)
+  ReactDOM.render(
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>,
+    document.getElementById('root')
+);
 
   serviceWorkerRegistration.register();

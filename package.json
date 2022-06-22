@@ -2,9 +2,11 @@
   "name": "harmony",
   "version": "1.0.0",
   "main": "index.js",
+  "proxy": "http://localhost:5000",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon api/server.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "server": "nodemon api/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,7 +14,7 @@
     "@parcel/packager-raw-url": "^2.5.0",
     "@parcel/transformer-webmanifest": "^2.5.0",
     "babel-plugin-macros": "^3.1.0",
-    "nodemon": "^2.0.16",
+    "nodemon": "^1.3.3",
     "parcel": "^2.5.0",
     "postcss": "^8.4.12",
     "tailwindcss": "^3.0.24"
@@ -21,9 +23,15 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "body-parser": "^1.20.0",
     "bootstrap": "^5.1.3",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "express-rate-limit": "^6.4.0",
+    "express-session": "^1.17.3",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
@@ -32,7 +40,21 @@
     "react-hook-form": "^7.30.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
+    "react-session-api": "^1.1.0",
     "tw-elements": "^1.0.0-alpha12"
   },
-  "description": ""
+  "description": "",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
